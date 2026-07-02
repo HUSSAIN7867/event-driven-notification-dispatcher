@@ -171,3 +171,21 @@ The response returns instantly. A few hundred milliseconds later, check the `not
 - **`node:sqlite` is experimental** (stable since Node 22.5, still flagged as experimental by Node itself as of this writing). It's synchronous, like `better-sqlite3`, which keeps the code simple but is worth knowing about for very high-throughput scenarios. It was chosen over `better-sqlite3`/`sqlite3` specifically to avoid requiring a native C++ build toolchain on the machine running this project.
 - **`npm install` requires internet access** to download `express` and `dotenv` from the npm registry.
 - **Requires Node.js 22.5 or newer.** Older Node versions don't include `node:sqlite` and would need `better-sqlite3` (and a C++ build toolchain) instead.
+
+## Deploying to Render
+
+This repository includes `render.yaml` and `Dockerfile` so you can deploy the app to Render with persistent disk support.
+
+1. Push the repository to GitHub.
+2. In the Render dashboard, create a new Web Service and connect your GitHub repo.
+3. Use the existing `render.yaml` file, or configure the service manually as follows:
+   - Environment: `Node`
+   - Build Command: `npm install`
+   - Start Command: `npm start`
+   - Health Check Path: `/health`
+4. Set environment variables in Render if needed:
+   - `PORT=3000`
+   - `DB_PATH=./data/notifications.db`
+5. Render Web Services provide a persistent disk for the app, so the local SQLite file at `./data/notifications.db` will persist across restarts.
+
+If you prefer, Render can also build from the provided `Dockerfile` instead of using the Node environment directly.

@@ -18,6 +18,15 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Event-Driven Notification Dispatcher is running.',
+    health_check: '/health',
+    submit_event: 'POST /api/v1/events',
+    docs: 'Send JSON with event_type, recipient, and optional data.'
+  });
+});
+
 app.use('/api/v1', eventRoutes);
 
 // 404 for anything unmatched
