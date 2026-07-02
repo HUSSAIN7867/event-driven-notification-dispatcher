@@ -6,6 +6,8 @@ const router = express.Router();
 // GET /api/v1
 // Returns API documentation for the v1 namespace.
 router.get('/', (req, res) => {
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+
   res.status(200).json({
     title: 'Event-Driven Notification Dispatcher API v1',
     endpoints: [
@@ -23,7 +25,7 @@ router.get('/', (req, res) => {
           recipient: 'user@example.com',
           data: { order_id: 101, amount: 49.99 }
         },
-        curl_example: "curl -X POST http://localhost:3000/api/v1/events -H 'Content-Type: application/json' -d '{\"event_type\":\"order_placed\",\"recipient\":\"user@example.com\",\"data\":{\"order_id\":101,\"amount\":49.99}}'",
+        curl_example: `curl -X POST ${baseUrl}/api/v1/events -H 'Content-Type: application/json' -d '{"event_type":"order_placed","recipient":"user@example.com","data":{"order_id":101,"amount":49.99}}'`,
         success_response: {
           message: 'Event accepted for processing',
           tracking_id: 'number',

@@ -139,7 +139,7 @@ Triggers a business event and queues a notification for it.
 ### Sample `curl` request
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/events \
+curl -X POST https://event-driven-notification-dispatcher-8jy6.onrender.com/api/v1/events \
   -H "Content-Type: application/json" \
   -d '{
     "event_type": "order_placed",
